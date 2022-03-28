@@ -5,6 +5,7 @@ import { employeeType } from "../Types/Types";
 type propsTypes = {
   state: typeof AppState;
   getSkilledEmployees: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  assign: (id: string) => void;
 };
 const Assign = (props: propsTypes) => {
   const unAssignedJobs = props.state.jobs.filter(
@@ -46,6 +47,13 @@ const Assign = (props: propsTypes) => {
                       );
                     })}
                   </div>
+                  <button
+                    onClick={() => {
+                      props.assign(employ.id);
+                    }}
+                  >
+                    Assign
+                  </button>
                 </div>
               );
             })}

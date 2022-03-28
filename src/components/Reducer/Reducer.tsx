@@ -13,8 +13,10 @@ const Reducer = (
       return { ...state, project: action.payload };
     case "GET_SKILLED_EMPLOYES":
       const result = helpToGetTheSkilledEmployees(action.payload, state);
-      console.log(result);
-      return state;
+
+      return { ...state, selectedEmploy: result };
+    case "ASSIGN_PROJECT":
+      return { ...state };
     default:
       return state;
   }

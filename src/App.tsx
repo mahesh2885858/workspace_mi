@@ -31,6 +31,9 @@ function App() {
     dispatch({ type: "SELECT_JOB", payload: e.target.value });
     dispatch({ type: "GET_SKILLED_EMPLOYES", payload: e.target.value });
   };
+  const assignProject = (id: string) => {
+    dispatch({ type: "ASSIGN_PROJECT", payload: id });
+  };
   return (
     <div className="App">
       <NavBar />
@@ -44,7 +47,11 @@ function App() {
         <Route
           path="/assign"
           element={
-            <Assign state={state} getSkilledEmployees={getSkilledEmployees} />
+            <Assign
+              state={state}
+              assign={assignProject}
+              getSkilledEmployees={getSkilledEmployees}
+            />
           }
         />
       </Routes>
