@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 
 const NavBar = () => {
   return (
@@ -8,7 +9,9 @@ const NavBar = () => {
       </div>
       <div className="nav-right">
         <Link to={`/jobs`}>Jobs</Link>
-
+        <Link to={`/search`}>
+          <BsSearch />
+        </Link>
         <Link to={`/employees`}>Employees</Link>
         <Link to={`/assign`}>Assign Job</Link>
       </div>

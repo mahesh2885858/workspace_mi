@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FormEvent } from "react";
 import { AppState } from "../../App";
-import MatchObject from "../helper/matchObjects";
+import MatchObject from "../helper/ToGetTheSkilledEmployees";
 import { employeeType } from "../Types/Types";
 type propsTypes = {
   state: typeof AppState;
@@ -23,6 +23,7 @@ const Assign = (props: propsTypes) => {
             id="jobs"
             onChange={(e) => props.getSkilledEmployees(e)}
           >
+            <option value="something">pleaseSelectONe</option>
             {unAssignedJobs.map((job) => {
               return (
                 <option value={job.id} key={job.id}>
@@ -47,13 +48,18 @@ const Assign = (props: propsTypes) => {
                       );
                     })}
                   </div>
-                  <button
-                    onClick={() => {
-                      props.assign(employ.id);
-                    }}
-                  >
-                    Assign
-                  </button>
+                  <p>Expierence: {employ.experience} Year</p>
+                  {employ.isAssignedJob ? (
+                    "assigned"
+                  ) : (
+                    <button
+                      onClick={() => {
+                        props.assign(employ.id);
+                      }}
+                    >
+                      Assign
+                    </button>
+                  )}
                 </div>
               );
             })}

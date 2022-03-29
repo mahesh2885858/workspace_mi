@@ -8,6 +8,7 @@ export type jobsType = {
   skillsRequired: skillsType[];
   isAssigned: boolean;
   assignedEmployeId: null | string;
+  description: string;
 };
 export type employeeType = {
   name: string;

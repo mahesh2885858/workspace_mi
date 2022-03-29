@@ -9,6 +9,7 @@ const JobSource: jobsType[] = [
       { name: "React", id: "RE123" },
       { name: "nodejs", id: "NDJ89" },
     ],
+    description: "some instructions about job",
   },
   {
     nameOfTheJob: "Vue Blog",
@@ -19,6 +20,7 @@ const JobSource: jobsType[] = [
       { name: "VueJs", id: "VU234" },
       { name: "nodejs", id: "NDJ89" },
     ],
+    description: "some instructions about job",
   },
   {
     nameOfTheJob: "Data Entry Form",
@@ -29,6 +31,7 @@ const JobSource: jobsType[] = [
       { name: "React", id: "RE123" },
       { name: "NextJs", id: "NXT456" },
     ],
+    description: "some instructions about job",
   },
 ];
 export default JobSource;
