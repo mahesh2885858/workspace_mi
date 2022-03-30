@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { AppState } from "../../App";
+import "./jobdetails.scss";
 type propsType = {
   state: typeof AppState;
   deleteJob?: (id: string) => void;
@@ -25,8 +26,10 @@ const JobDetails = (props: propsType) => {
         <div className="job-details-container">
           {jobFromId.map((job) => {
             return (
-              <div key={job.id}>
-                <p>Name of the Job : {job.nameOfTheJob}</p>
+              <div className="job-details" key={job.id}>
+                <p className="job-details-name">
+                  Name of the Job : {job.nameOfTheJob}
+                </p>
                 <div>
                   skills Required For the Job:
                   {job.skillsRequired.map((skill) => {
@@ -36,7 +39,7 @@ const JobDetails = (props: propsType) => {
                 <p>
                   status:
                   {job.isAssigned
-                    ? employeeForTheJob![0].name
+                    ? "Job Assiged to " + employeeForTheJob![0].name
                     : "it's not Assigned"}
                 </p>
                 <div>

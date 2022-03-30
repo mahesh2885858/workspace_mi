@@ -14,13 +14,13 @@
     border-radius: 5px;
     background: rgb(192, 226, 133);
   }
-}
-.employee-details {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 2em;
-  padding: 2em;
+  .employee-details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2em;
+    padding: 2em;
+  }
 }
 .each-employee {
   padding: 1em;

@@ -159,6 +159,7 @@ function App() {
                 state={state}
                 assign={assignProject}
                 getSkilledEmployees={getSkilledEmployees}
+                gotoEmployeePage={gotoEmployeePage}
               />
             }
           />

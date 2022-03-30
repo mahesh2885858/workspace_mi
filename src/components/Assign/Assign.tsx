@@ -5,6 +5,7 @@ type propsTypes = {
   state: typeof AppState;
   getSkilledEmployees: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   assign: (id: string) => void;
+  gotoEmployeePage: (id: string) => void;
 };
 const Assign = (props: propsTypes) => {
   const unAssignedJobs = props.state.jobs.filter(
@@ -31,7 +32,7 @@ const Assign = (props: propsTypes) => {
               );
             })}
           </select>
-          <div>
+          <div className="required-skill-container">
             <p>
               {props.state.skillsRequiredForTheSelectedJOb.length > 0
                 ? "skills Required"
@@ -41,27 +42,29 @@ const Assign = (props: propsTypes) => {
               return <li key={skill.id}>{skill.name}</li>;
             })}
           </div>
-          <div>
-            <p>
-              {props.state.selectedEmploy.length > 0
-                ? "employees matching with job requirements"
-                : undefined}
-            </p>
+          <p>
+            {props.state.selectedEmploy.length > 0
+              ? "employees matching with job requirements"
+              : undefined}
+          </p>
+          <div className="employees-with-skills-container">
             {props.state.selectedEmploy.map((employ) => {
               return (
-                <div key={employ.id}>
-                  <p>{employ.name}</p>
-                  <div>
-                    employ skills:
-                    {employ.skills.map((item) => {
-                      return (
-                        <>
-                          <p key={item.id}>{item.name}</p>{" "}
-                        </>
-                      );
-                    })}
+                <div className="employee" key={employ.id}>
+                  <div onClick={() => props.gotoEmployeePage(employ.id)}>
+                    <p className="employee-name">{employ.name}</p>
+                    <div>
+                      <p>employ skills:</p>
+                      {employ.skills.map((item) => {
+                        return (
+                          <>
+                            <p key={item.id}>{item.name}</p>{" "}
+                          </>
+                        );
+                      })}
+                    </div>
+                    <p>Expierence: {employ.experience} Year</p>
                   </div>
-                  <p>Expierence: {employ.experience} Year</p>
                   {employ.isAssignedJob ? (
                     "assigned"
                   ) : (

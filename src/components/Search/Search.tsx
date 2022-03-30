@@ -1,5 +1,5 @@
 import { AppState } from "../../App";
-
+import "./search.scss";
 type propsType = {
   state: typeof AppState;
   onSearchInput: (id: string) => void;
@@ -10,7 +10,7 @@ type propsType = {
 const Search = (props: propsType) => {
   return (
     <div className="search-container">
-      <div className="search-container">
+      <div className="search-input">
         <input
           onChange={(e) => props.onSearchInput(e.target.value)}
           value={props.state.filterText}
@@ -19,8 +19,8 @@ const Search = (props: propsType) => {
         />
       </div>
       <div className="search-result-container">
+        <h3>Results in employees:</h3>
         <div className="employee-results">
-          <h3>Results in employees:</h3>
           {props.state.filteredEmployeeArray.map((employee) => {
             return (
               <div
@@ -36,8 +36,8 @@ const Search = (props: propsType) => {
             );
           })}
         </div>
+        <h3>Results in jobs:</h3>
         <div className="job-results">
-          <h3>Results in jobs:</h3>
           {props.state.filteredJobsArray.map((job) => {
             return (
               <div onClick={() => props.goToJobDetails(job.id)} key={job.id}>

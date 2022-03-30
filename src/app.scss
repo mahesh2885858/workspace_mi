@@ -7,16 +7,17 @@ body,
 html {
   height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
   font-family: "Roboto", sans-serif;
+  background: linear-gradient(to right, #eee, rgb(200, 169, 169));
 }
 #root {
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #eee, rgb(200, 169, 169));
 }
 .App {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 57.19px);
   display: flex;
   flex-direction: column;
 }

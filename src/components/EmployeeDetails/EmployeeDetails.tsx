@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { AppState } from "../../App";
+import "./employeedetails.scss";
 type propsType = {
   state: typeof AppState;
   deleteEmployee?: (id: string) => void;
@@ -24,24 +25,28 @@ const EmployeeDetails = (props: propsType) => {
         }
       };
       const job = jobassigned();
-      console.log(job);
       return (
-        <div>
+        <div className="employee-details-container">
           <h1>Employee Details</h1>
           {employeefromId.map((info) => {
             return (
-              <div key={info.id}>
-                <p>{info.name}</p>
+              <div className="employee-details" key={info.id}>
+                <p className="employee-details-name">Name : {info.name}</p>
                 <div>
                   skilss:
                   {info.skills.map((skill) => {
                     return <p key={skill.id}>{skill.name}</p>;
                   })}
                 </div>
-                <span>expierence:{info.experience}</span>
-                <p>
-                  status:
-                  {info.isAssignedJob ? job![0].nameOfTheJob : "not assigned"}
+                <span>
+                  expierence: {info.experience}
+                  {info.experience > 1 ? "Years" : "Year"}{" "}
+                </span>
+                <p className="employee-details-status">
+                  working Project:
+                  <span className={info.isAssignedJob ? "green" : "red"}>
+                    {info.isAssignedJob ? job![0].nameOfTheJob : "not assigned"}
+                  </span>
                 </p>
                 <Link to={`/employee/edit/${info.id}`}>
                   Edit Employee Details

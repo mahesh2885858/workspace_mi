@@ -55,6 +55,9 @@
         background-color: #eee;
         padding: 0.25em;
       }
+      .delete-icon:hover {
+        cursor: pointer;
+      }
     }
     button {
       display: block;

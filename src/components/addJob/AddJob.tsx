@@ -62,6 +62,7 @@ const AddJob = (props: propsType) => {
                   <div key={skill.id}>
                     {skill.name}{" "}
                     <TiDelete
+                      className="delete-icon"
                       onClick={() => props.removeFromSelectedSkills(skill.id)}
                     />
                   </div>
