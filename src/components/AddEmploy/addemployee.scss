@@ -11,4 +11,57 @@
 .add-employee-form-container {
   display: flex;
   flex-direction: column;
+  form {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.5em;
+    }
+    input,
+    select {
+      margin-bottom: 0.5em;
+    }
+    input,
+    select {
+      font-size: 1.2rem;
+      padding: 0.25em;
+    }
+    .skills-container {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      gap: 5px;
+      flex-wrap: wrap;
+      div {
+        padding: 0.2em;
+        background-color: #eee;
+        .remove-icon {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    .remove-icon:hover {
+      cursor: pointer;
+    }
+    button {
+      border: none;
+      color: black;
+      padding: 0.25em;
+      font-size: 1.2rem;
+      width: 150px;
+      border-radius: 5px;
+      background: #e8e8e8;
+      border: 1px solid #e8e8e8;
+      transition: all 0.3s;
+      margin: 0.25em auto;
+      box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    }
+
+    button:active {
+      color: #666;
+      box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    }
+  }
 }

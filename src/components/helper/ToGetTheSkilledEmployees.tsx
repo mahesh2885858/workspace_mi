@@ -3,7 +3,6 @@ import { AppState } from "../../App";
 const helpToGetTheSkilledEmployees = (data: string, state: typeof AppState) => {
   const unAssignedJobs = state.jobs.filter((job) => job.isAssigned === false);
   const SelectedJob = unAssignedJobs.filter((job) => job.id === data);
-  console.log(SelectedJob);
   const requiredSkillsArray =
     SelectedJob.length > 0
       ? SelectedJob[0].skillsRequired.map((item) => item.id)

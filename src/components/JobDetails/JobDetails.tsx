@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppState } from "../../App";
 type propsType = {
   state: typeof AppState;
+  deleteJob?: (id: string) => void;
 };
 const JobDetails = (props: propsType) => {
   const { id } = useParams();
@@ -41,6 +42,8 @@ const JobDetails = (props: propsType) => {
                 <div>
                   <p>{job.description}</p>
                 </div>
+                <Link to={`/job/edit/${job.id}`}>Edit</Link>
+                <button onClick={() => props.deleteJob!(job.id)}>Delete</button>
               </div>
             );
           })}

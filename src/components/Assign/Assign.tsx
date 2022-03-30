@@ -1,7 +1,6 @@
 import React, { ChangeEventHandler, FormEvent } from "react";
 import { AppState } from "../../App";
-import MatchObject from "../helper/ToGetTheSkilledEmployees";
-import { employeeType } from "../Types/Types";
+import "./assign.scss";
 type propsTypes = {
   state: typeof AppState;
   getSkilledEmployees: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -32,8 +31,22 @@ const Assign = (props: propsTypes) => {
               );
             })}
           </select>
-
           <div>
+            <p>
+              {props.state.skillsRequiredForTheSelectedJOb.length > 0
+                ? "skills Required"
+                : undefined}
+            </p>
+            {props.state.skillsRequiredForTheSelectedJOb.map((skill) => {
+              return <li key={skill.id}>{skill.name}</li>;
+            })}
+          </div>
+          <div>
+            <p>
+              {props.state.selectedEmploy.length > 0
+                ? "employees matching with job requirements"
+                : undefined}
+            </p>
             {props.state.selectedEmploy.map((employ) => {
               return (
                 <div key={employ.id}>

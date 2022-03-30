@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppState } from "../../App";
 type propsType = {
   state: typeof AppState;
+  deleteEmployee?: (id: string) => void;
 };
 const EmployeeDetails = (props: propsType) => {
   const { id } = useParams();
@@ -42,6 +43,12 @@ const EmployeeDetails = (props: propsType) => {
                   status:
                   {info.isAssignedJob ? job![0].nameOfTheJob : "not assigned"}
                 </p>
+                <Link to={`/employee/edit/${info.id}`}>
+                  Edit Employee Details
+                </Link>
+                <button onClick={() => props.deleteEmployee!(info.id)}>
+                  Delete Employee
+                </button>
               </div>
             );
           })}

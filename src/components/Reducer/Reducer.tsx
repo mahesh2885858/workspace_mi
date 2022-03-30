@@ -2,6 +2,8 @@ import { AppState } from "../../App";
 import assingTheJob from "../helper/assigningAJob";
 import { v4 as uuid } from "uuid";
 import helpToGetTheSkilledEmployees from "../helper/ToGetTheSkilledEmployees";
+import EmployeeDetails from "../EmployeeDetails/EmployeeDetails";
+import getSkillsRequired from "../helper/getSkillsRequiredForJob";
 type actionType = {
   type: string;
   payload: string;
@@ -13,12 +15,16 @@ const Reducer = (
 ): typeof AppState => {
   switch (action.type) {
     case "SELECT_JOB":
-      console.log(action.payload);
       return { ...state, project: action.payload };
     case "GET_SKILLED_EMPLOYES":
+      const skillsRequired = getSkillsRequired(state, action.payload);
       const result = helpToGetTheSkilledEmployees(action.payload, state);
 
-      return { ...state, selectedEmploy: result };
+      return {
+        ...state,
+        selectedEmploy: result,
+        skillsRequiredForTheSelectedJOb: skillsRequired,
+      };
     case "ASSIGN_PROJECT":
       console.log(action.payload);
       const changedState = assingTheJob(action.payload, state);
@@ -64,7 +70,11 @@ const Reducer = (
           return;
         }
       });
+      console.log(obj);
+      console.log(state.employeeDetails.skills);
+      console.log(state.employeeDetails.skills.indexOf(obj[0]) >= 0);
       if (!(state.employeeDetails.skills.indexOf(obj[0]) >= 0)) {
+        console.log("first");
         return {
           ...state,
           employeeDetails: {
@@ -94,24 +104,50 @@ const Reducer = (
         employeeDetails: { ...state.employeeDetails, skills: newSkillset },
       };
     case "ADD_EMPLOYEE":
-      if (
-        state.employeeDetails.name &&
-        state.employeeDetails.skills.length > 0
-      ) {
-        const newEmployee = { ...state.employeeDetails, id: uuid() };
+      if (!state.isEditOn) {
+        if (
+          state.employeeDetails.name.trim().length > 0 &&
+          state.employeeDetails.skills.length > 0
+        ) {
+          const newEmployee = { ...state.employeeDetails, id: uuid() };
+          return {
+            ...state,
+            employees: [...state.employees, newEmployee],
+            employeeDetails: {
+              ...state.employeeDetails,
+              name: "",
+              id: "",
+              experience: 0,
+              skills: [],
+            },
+          };
+        } else {
+          return state;
+        }
+      } else {
+        const employeesAfterEdit = state.employees.map((employee) => {
+          if (employee.id === state.editID) {
+            return {
+              ...employee,
+              ...state.employeeDetails,
+              employeeDetails: {
+                ...state.employeeDetails,
+                name: "",
+                id: "",
+                experience: 0,
+                skills: [],
+              },
+            };
+          } else {
+            return employee;
+          }
+        });
         return {
           ...state,
-          employees: [...state.employees, newEmployee],
-          employeeDetails: {
-            ...state.employeeDetails,
-            name: "",
-            id: "",
-            experience: 0,
-            skills: [],
-          },
+          editID: "",
+          employees: employeesAfterEdit,
+          isEditOn: false,
         };
-      } else {
-        return state;
       }
     case "SELECT_SKILLS_FOR_JOB":
       const job = state.skills.filter((skill) => {
@@ -168,24 +204,47 @@ const Reducer = (
         };
       }
     case "ADD_JOB":
-      if (
-        state.jobDetails.nameOfTheJob &&
-        state.jobDetails.skillsRequired.length > 0
-      ) {
-        const newJob = { ...state.jobDetails, id: uuid() };
+      if (!state.isEditOn) {
+        if (
+          state.jobDetails.nameOfTheJob.trim().length > 0 &&
+          state.jobDetails.skillsRequired.length > 0
+        ) {
+          const newJob = { ...state.jobDetails, id: uuid() };
+          return {
+            ...state,
+            jobs: [...state.jobs, newJob],
+            jobDetails: {
+              ...state.jobDetails,
+              nameOfTheJob: "",
+              id: "",
+              description: "",
+              skillsRequired: [],
+            },
+          };
+        } else {
+          return state;
+        }
+      } else {
+        const jobsAfterEditing = state.jobs.map((job) => {
+          if (job.id === state.editID) {
+            return { ...job, ...state.jobDetails };
+          } else {
+            return job;
+          }
+        });
         return {
           ...state,
-          jobs: [...state.jobs, newJob],
+          jobs: jobsAfterEditing,
           jobDetails: {
             ...state.jobDetails,
+            description: "",
             nameOfTheJob: "",
             id: "",
-            description: "",
             skillsRequired: [],
           },
+          editID: "",
+          isEditOn: false,
         };
-      } else {
-        return state;
       }
     case "SEARCH_INPUT":
       const filteredEmployees = state.employees.filter((employee) => {
@@ -212,6 +271,84 @@ const Reducer = (
       };
     case "CHANGE_SEARCH_INPUT":
       return { ...state, filterText: action.payload };
+    case "SET_EMPLOYEE_INPUTS":
+      const Semployee = state.employees.filter((employee) => {
+        if (employee.id === action.payload) {
+          return employee;
+        }
+      });
+      if (Semployee.length > 0) {
+        return {
+          ...state,
+          isEditOn: true,
+          editID: action.payload,
+          employeeDetails: {
+            ...state.employeeDetails,
+            name: Semployee[0].name,
+            skills: Semployee[0].skills,
+            experience: Semployee[0].experience,
+            id: Semployee[0].id,
+          },
+        };
+      } else {
+        return state;
+      }
+    case "DELETE_EMPLOYEE":
+      const employeesAfterDeleting = state.employees.filter(
+        (employee) => employee.id !== action.payload
+      );
+      const deassignnedJOb = state.jobs.filter(
+        (job) => job.assignedEmployeId === action.payload
+      );
+      if (!(deassignnedJOb.length > 0)) {
+        return { ...state, employees: employeesAfterDeleting };
+      } else {
+        const removingjobStatus = state.jobs.map((job) => {
+          if (job.assignedEmployeId === action.payload) {
+            return { ...job, isAssigned: false, assignedEmployeId: null };
+          } else {
+            return job;
+          }
+        });
+        return { ...state, jobs: removingjobStatus };
+      }
+    case "SET_JOB_INPUTS":
+      const selectedJob = state.jobs.filter((job) => job.id === action.payload);
+      if (selectedJob.length > 0) {
+        return {
+          ...state,
+          jobDetails: {
+            ...state.jobDetails,
+            nameOfTheJob: selectedJob[0].nameOfTheJob,
+            id: selectedJob[0].id,
+            skillsRequired: selectedJob[0].skillsRequired,
+            description: selectedJob[0].description,
+          },
+          isEditOn: true,
+          editID: action.payload,
+        };
+      } else {
+        return state;
+      }
+    case "DELETE_JOB":
+      const employeedoingtheJob = state.employees.filter(
+        (employee) => employee.assignedJobId === action.payload
+      );
+      const jobsAfterDeleting = state.jobs.filter(
+        (job) => job.id !== action.payload
+      );
+      if (!(employeedoingtheJob.length > 0)) {
+        return { ...state, jobs: jobsAfterDeleting };
+      } else {
+        const removeJob = state.employees.map((employee) => {
+          if (employee.assignedJobId === action.payload) {
+            return { ...employee, assignedJobId: null, isAssignedJob: false };
+          } else {
+            return employee;
+          }
+        });
+        return { ...state, jobs: jobsAfterDeleting, employees: removeJob };
+      }
     default:
       return state;
   }

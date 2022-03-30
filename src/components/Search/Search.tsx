@@ -41,7 +41,7 @@ const Search = (props: propsType) => {
           {props.state.filteredJobsArray.map((job) => {
             return (
               <div onClick={() => props.goToJobDetails(job.id)} key={job.id}>
-                <p>employee name:{job.nameOfTheJob}</p>
+                <p>job name:{job.nameOfTheJob}</p>
                 <p>
                   status:
                   {job.isAssigned ? "Assigned to employee" : "not assigned"}

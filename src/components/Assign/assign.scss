@@ -1,0 +1,16 @@
+.assign-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  //   height: 100%;
+  p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 1em;
+  }
+  select {
+    width: 200px;
+    font-size: 1.2rem;
+    margin-left: 1.5em;
+  }
+}

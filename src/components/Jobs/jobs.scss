@@ -1,0 +1,53 @@
+.jobs-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  a {
+    margin-left: 2em;
+    text-decoration: none;
+    color: black;
+    background: rgb(130, 245, 245);
+    padding: 0.5em;
+    width: 100px;
+    border-radius: 4px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    text-align: center;
+  }
+}
+.jobs-details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2em;
+  padding: 1em;
+}
+.each-job {
+  font-size: 1rem;
+  padding: 1em;
+  border-radius: 5px;
+  background: rgba(255, 192, 203, 0.795);
+  transition: 0.5s ease-in-out;
+
+  :hover {
+    cursor: pointer;
+  }
+  .job-status > .job-assigned {
+    background-color: rgb(82, 192, 82);
+    padding: 0.5em;
+    border-radius: 3px;
+  }
+  .job-status > .job-not-assigned {
+    background-color: rgb(231, 101, 101);
+    padding: 0.5em;
+    border-radius: 3px;
+  }
+}
+.each-job:hover {
+  transform: scale(1.1);
+  transition: 0.5s ease-in-out;
+  box-shadow: 5px 5px 10px rgb(204, 141, 196);
+}

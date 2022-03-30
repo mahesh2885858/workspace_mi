@@ -28,6 +28,9 @@ type appType = {
   filterText: string;
   filteredJobsArray: jobsType[];
   filteredEmployeeArray: employeeType[];
+  isEditOn: boolean;
+  editID: string;
+  skillsRequiredForTheSelectedJOb: skillsType[];
 };
 export const AppState: appType = {
   jobs: JobSource,
@@ -54,6 +57,9 @@ export const AppState: appType = {
   filterText: "",
   filteredEmployeeArray: [],
   filteredJobsArray: [],
+  isEditOn: false,
+  editID: "",
+  skillsRequiredForTheSelectedJOb: [],
 };
 function App() {
   const [state, dispatch] = useReducer(Reducer, AppState);
@@ -73,6 +79,7 @@ function App() {
   const AddEmployeeToDb = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch({ type: "ADD_EMPLOYEE", payload: "add" });
+    navigate("/employees");
   };
 
   const removeSkill = (skillId: string) => {
@@ -103,82 +110,132 @@ function App() {
   const addJob = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch({ type: "ADD_JOB", payload: "add" });
+    navigate("/jobs");
   };
   // functions related to Search
   const onSearchInput = (input: string) => {
     dispatch({ type: "CHANGE_SEARCH_INPUT", payload: input });
     dispatch({ type: "SEARCH_INPUT", payload: input });
   };
+  // Editing employee details
+  const editEmolyeeInputs = (id: string) => {
+    dispatch({ type: "SET_EMPLOYEE_INPUTS", payload: id });
+  };
+  // Deleting an employee
+  const deleteEmployee = (id: string) => {
+    dispatch({ type: "DELETE_EMPLOYEE", payload: id });
+    navigate("/employees");
+  };
+  const setJobInputs = (id: string) => {
+    dispatch({ type: "SET_JOB_INPUTS", payload: id });
+  };
+  const deleteJob = (id: string) => {
+    dispatch({ type: "DELETE_JOB", payload: id });
+    navigate("/jobs");
+  };
   return (
-    <div className="App">
+    <>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<DashBoard {...state} />} />
-        <Route
-          path="/jobs"
-          element={<Jobs getJob={goToJobDetails} alljobs={state.jobs} />}
-        />
-        <Route
-          path="/employees"
-          element={
-            <Employees
-              gotoEmployeePage={gotoEmployeePage}
-              allemployees={state.employees}
-            />
-          }
-        />
-        <Route
-          path="/assign"
-          element={
-            <Assign
-              state={state}
-              assign={assignProject}
-              getSkilledEmployees={getSkilledEmployees}
-            />
-          }
-        />
-        <Route
-          path="/addemploy"
-          element={
-            <AddEmploy
-              removeSkill={removeSkill}
-              onSkillChange={onSkillChange}
-              state={state}
-              onInput={onInput}
-              addEmployee={AddEmployeeToDb}
-            />
-          }
-        />
-        <Route
-          path="/employee/:id"
-          element={<EmployeeDetails state={state} />}
-        />
-        <Route path="/job/:id" element={<JobDetails state={state} />} />
-        <Route
-          path="/addjob"
-          element={
-            <AddJob
-              addJob={addJob}
-              removeFromSelectedSkills={removeFromSelectedSkills}
-              selectingTheSkillForJob={selectingTheSkillForJob}
-              onJobDetailsInput={onJobDetailsInput}
-              state={state}
-            />
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <Search
-              goToJobDetails={goToJobDetails}
-              gotoEmployeePage={gotoEmployeePage}
-              onSearchInput={onSearchInput}
-              state={state}
-            />
-          }
-        />
-      </Routes>
-    </div>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<DashBoard {...state} />} />
+          <Route
+            path="/jobs"
+            element={<Jobs getJob={goToJobDetails} alljobs={state.jobs} />}
+          />
+          <Route
+            path="/employees"
+            element={
+              <Employees
+                gotoEmployeePage={gotoEmployeePage}
+                allemployees={state.employees}
+              />
+            }
+          />
+          <Route
+            path="/assign"
+            element={
+              <Assign
+                state={state}
+                assign={assignProject}
+                getSkilledEmployees={getSkilledEmployees}
+              />
+            }
+          />
+          <Route
+            path="/addemploy"
+            element={
+              <AddEmploy
+                removeSkill={removeSkill}
+                onSkillChange={onSkillChange}
+                state={state}
+                onInput={onInput}
+                addEmployee={AddEmployeeToDb}
+              />
+            }
+          />
+          <Route
+            path="/employee/:id"
+            element={
+              <EmployeeDetails deleteEmployee={deleteEmployee} state={state} />
+            }
+          />
+          <Route
+            path="/job/:id"
+            element={<JobDetails deleteJob={deleteJob} state={state} />}
+          />
+          <Route
+            path="/addjob"
+            element={
+              <AddJob
+                addJob={addJob}
+                removeFromSelectedSkills={removeFromSelectedSkills}
+                selectingTheSkillForJob={selectingTheSkillForJob}
+                onJobDetailsInput={onJobDetailsInput}
+                state={state}
+              />
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <Search
+                goToJobDetails={goToJobDetails}
+                gotoEmployeePage={gotoEmployeePage}
+                onSearchInput={onSearchInput}
+                state={state}
+              />
+            }
+          />
+          <Route
+            path="/employee/edit/:id"
+            element={
+              <AddEmploy
+                removeSkill={removeSkill}
+                onSkillChange={onSkillChange}
+                state={state}
+                onInput={onInput}
+                addEmployee={AddEmployeeToDb}
+                editEmolyeeInputs={editEmolyeeInputs}
+              />
+            }
+          />
+          <Route
+            path="/job/edit/:id"
+            element={
+              <AddJob
+                addJob={addJob}
+                removeFromSelectedSkills={removeFromSelectedSkills}
+                selectingTheSkillForJob={selectingTheSkillForJob}
+                onJobDetailsInput={onJobDetailsInput}
+                state={state}
+                setJobInputs={setJobInputs}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </>
   );
 }
 

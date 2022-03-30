@@ -1,0 +1,66 @@
+.add-job-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    margin-left: 1em;
+  }
+  .add-job-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    justify-content: center;
+    height: 100%;
+    gap: 2em;
+    div {
+      align-items: center;
+      display: flex;
+    }
+    label {
+      font-size: 1.2rem;
+      display: inline-block;
+      align-self: flex-start;
+      width: 150px;
+    }
+    input {
+      margin-left: 1.5em;
+      font-size: 1.2rem;
+      padding: 0.25em;
+    }
+    select {
+      font-size: 1rem;
+      padding: 0.5em;
+      margin-left: 2em;
+    }
+    textarea {
+      font-size: 1.2rem;
+      padding: 0.5em;
+      display: block;
+    }
+    .skills-container {
+      display: flex;
+      flex-direction: row;
+      font-size: 1rem;
+      gap: 0.5em;
+      div {
+        background-color: #eee;
+        padding: 0.25em;
+      }
+    }
+    button {
+      display: block;
+      width: 100px;
+      padding: 0.5em;
+      margin: 2em auto;
+    }
+  }
+}
