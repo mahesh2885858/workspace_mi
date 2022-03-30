@@ -1,5 +1,6 @@
 import { AppState } from "../../App";
 import { TiDelete } from "react-icons/ti";
+import "./addemployee.scss";
 import React from "react";
 type propsType = {
   state: typeof AppState;
@@ -10,9 +11,9 @@ type propsType = {
 };
 const AddEmploy = (props: propsType) => {
   return (
-    <div>
+    <div className="add-employee-container">
       <h1>Add Employ</h1>
-      <div>
+      <div className="add-employee-form-container">
         <form>
           <label htmlFor="name">Name</label>
           <input

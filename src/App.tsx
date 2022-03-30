@@ -15,6 +15,7 @@ import EmployeeSource from "./components/Source/Employees";
 import JobSource from "./components/Source/Jobs";
 import SkillsSource from "./components/Source/Skills";
 import { employeeType, jobsType, skillsType } from "./components/Types/Types";
+import "./app.scss";
 const employesSelectedById: employeeType[] = [];
 type appType = {
   jobs: jobsType[];

@@ -16,5 +16,13 @@ const SkillsSource: skillsType[] = [
     name: "NodeJs",
     id: "NDJ89",
   },
+  {
+    name: "SvelteJs",
+    id: "SVLT35",
+  },
+  {
+    name: "Angular",
+    id: "ANG345",
+  },
 ];
 export default SkillsSource;
