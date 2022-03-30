@@ -138,7 +138,16 @@ function App() {
       <NavBar />
       <div className="App">
         <Routes>
-          <Route path="/" element={<DashBoard {...state} />} />
+          <Route
+            path="/"
+            element={
+              <DashBoard
+                state={state}
+                goToJobDetails={goToJobDetails}
+                gotoEmployeePage={gotoEmployeePage}
+              />
+            }
+          />
           <Route
             path="/jobs"
             element={<Jobs getJob={goToJobDetails} alljobs={state.jobs} />}
