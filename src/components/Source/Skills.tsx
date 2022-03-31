@@ -5,6 +5,10 @@ const SkillsSource: skillsType[] = [
     id: "RE123",
   },
   {
+    name: "TypeScript",
+    id: "TPSCPT1156123",
+  },
+  {
     name: "VueJs",
     id: "VU234",
   },
@@ -23,6 +27,18 @@ const SkillsSource: skillsType[] = [
   {
     name: "Angular",
     id: "ANG345",
+  },
+  {
+    name: "MongoDb",
+    id: "MNGD1345",
+  },
+  {
+    name: "MySql",
+    id: "MSQL9345",
+  },
+  {
+    name: "GraphQl",
+    id: "GRPQL6385",
   },
 ];
 export default SkillsSource;

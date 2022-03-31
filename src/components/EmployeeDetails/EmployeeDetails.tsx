@@ -1,19 +1,22 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { AppState } from "../../App";
+import { appType } from "../../App";
 import "./employeedetails.scss";
 type propsType = {
-  state: typeof AppState;
+  state: appType;
   deleteEmployee?: (id: string) => void;
+  goToJobDetails?: (id: string) => void;
 };
 const EmployeeDetails = (props: propsType) => {
   const { id } = useParams();
 
   if (id) {
-    const employeefromId = props.state.employees.filter(
+    const employeefromId = props.state.employeesWeUse.filter(
       (employee) => employee.id === id
     );
+    // checking whether the employee with the id we recieve from the url exist or not
     if (employeefromId.length > 0) {
+      // getting the job that is assigned to the employee whose id we recieved from url
       const jobassigned = () => {
         if (employeefromId[0].isAssignedJob) {
           const job = props.state.jobs.filter(
@@ -44,7 +47,10 @@ const EmployeeDetails = (props: propsType) => {
                 </span>
                 <p className="employee-details-status">
                   working Project:
-                  <span className={info.isAssignedJob ? "green" : "red"}>
+                  <span
+                    onClick={() => props.goToJobDetails!(job![0].id)}
+                    className={info.isAssignedJob ? "active" : "red"}
+                  >
                     {info.isAssignedJob ? job![0].nameOfTheJob : "not assigned"}
                   </span>
                 </p>

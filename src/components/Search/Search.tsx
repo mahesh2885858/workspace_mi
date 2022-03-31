@@ -1,19 +1,19 @@
-import { AppState } from "../../App";
+import { appType } from "../../App";
 import "./search.scss";
 type propsType = {
-  state: typeof AppState;
+  state: appType;
   onSearchInput: (id: string) => void;
   gotoEmployeePage: (id: string) => void;
   goToJobDetails: (id: string) => void;
 };
-
+// showing search result in both employees and jobs
 const Search = (props: propsType) => {
   return (
     <div className="search-container">
       <div className="search-input">
         <input
           onChange={(e) => props.onSearchInput(e.target.value)}
-          value={props.state.filterText}
+          value={props.state.searchText}
           type="text"
           placeholder="search here......!"
         />

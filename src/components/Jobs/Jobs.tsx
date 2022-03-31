@@ -1,16 +1,34 @@
 import { Link } from "react-router-dom";
 import "./jobs.scss";
-import { jobsType } from "../Types/Types";
+import { appType } from "../../App";
 type propsType = {
-  alljobs: jobsType[];
+  state: appType;
   getJob: (id: string) => void;
+  onFilterTextChange: (data: string, field: string) => void;
 };
+//  To show all the jobs and their status
 const Jobs = (props: propsType) => {
   return (
     <div className="jobs-container">
-      <Link to={`/addjob`}>Add A Job</Link>
+      <div>
+        <select
+          onChange={(e) => props.onFilterTextChange(e.target.value, "jobs")}
+          value={props.state.filterText}
+        >
+          <option value="">select</option>
+          {props.state.skills.map((skill) => {
+            return (
+              <option value={skill.id} key={skill.id}>
+                {skill.name}
+              </option>
+            );
+          })}
+        </select>
+        <Link to={`/addjob`}>Add A Job</Link>
+      </div>
+
       <div className="jobs-details">
-        {props.alljobs.map((job) => {
+        {props.state.filteredJobsBySkillsArray.map((job) => {
           return (
             <div
               className="each-job"

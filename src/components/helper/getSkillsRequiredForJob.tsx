@@ -1,7 +1,8 @@
-import { AppState } from "../../App";
+import { appType } from "../../App";
 import { skillsType } from "../Types/Types";
 
-const getSkillsRequired = (state: typeof AppState, id: string) => {
+// To get the skills required for job we selected while assigning a job
+const getSkillsRequired = (state: appType, id: string) => {
   const selectedProject = state.jobs.filter((job) => job.id === id);
   let skills: skillsType[] = [];
   if (selectedProject.length > 0) {

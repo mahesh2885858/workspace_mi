@@ -9,7 +9,9 @@
   div {
     display: flex;
     flex-direction: row;
+    gap: 1.5em;
     padding: 3em;
+    border-radius: 10px;
     .no-assigned-jobs {
       margin-left: 3em;
       font-size: 1.2rem;
@@ -22,6 +24,22 @@
       background: linear-gradient(
         (to right, rgb(251, 153, 153), rgba(251, 153, 153, 0.377))
       );
+      p {
+        color: rgba(12, 12, 12, 0.808);
+        span {
+          text-transform: capitalize;
+          margin-left: 0.5em;
+          cursor: pointer;
+          color: black;
+          transition: 0.5s ease-in-out;
+        }
+      }
+      p {
+        span:hover {
+          text-decoration: underline;
+          transition: 0.5s ease-in-out;
+        }
+      }
     }
   }
 }

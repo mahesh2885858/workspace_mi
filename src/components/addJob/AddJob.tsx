@@ -1,10 +1,10 @@
-import { AppState } from "../../App";
+import { appType } from "../../App";
 import { TiDelete } from "react-icons/ti";
 import React, { useEffect } from "react";
 import "./addjob.scss";
 import { useParams } from "react-router";
 type propsType = {
-  state: typeof AppState;
+  state: appType;
   onJobDetailsInput: (e: string, field: string) => void;
   selectingTheSkillForJob: (id: string) => void;
   removeFromSelectedSkills: (id: string) => void;
@@ -15,6 +15,8 @@ type propsType = {
 const AddJob = (props: propsType) => {
   const { id } = useParams();
   useEffect(() => {
+    // checking whether user wants to add a new or edit an existng employee
+    // if there is an id in parameters then user want to edit an existing employee
     if (id) {
       props.setJobInputs!(id);
     }

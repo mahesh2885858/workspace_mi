@@ -1,3 +1,5 @@
+// types for our app
+
 export type skillsType = {
   name: string;
   id: string;

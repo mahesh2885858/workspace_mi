@@ -1,6 +1,7 @@
-import { AppState } from "../../App";
-
-const assingTheJob = (employeId: string, state: typeof AppState) => {
+import { appType } from "../../App";
+//  to assign the job to an employee whose id we recieved as an argument
+const assingTheJob = (employeId: string, state: appType) => {
+  // getting the new Employees after assigning the job
   const newEmployees = state.employees.map((employ) => {
     if (employ.id === employeId) {
       return {
@@ -12,6 +13,8 @@ const assingTheJob = (employeId: string, state: typeof AppState) => {
       return employ;
     }
   });
+  // getting the new Jobs after assigning the selected job to an employee
+
   const newJobs = state.jobs.map((job) => {
     if (job.id === state.project) {
       return {

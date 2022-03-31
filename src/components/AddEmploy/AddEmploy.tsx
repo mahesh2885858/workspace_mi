@@ -1,10 +1,10 @@
-import { AppState } from "../../App";
+import { appType } from "../../App";
 import { TiDelete } from "react-icons/ti";
 import "./addemployee.scss";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 type propsType = {
-  state: typeof AppState;
+  state: appType;
   onSkillChange: (e: string) => void;
   onInput: (e: string, field: string) => void;
   removeSkill: (e: string) => void;

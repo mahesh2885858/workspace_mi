@@ -16,28 +16,39 @@ import JobSource from "./components/Source/Jobs";
 import SkillsSource from "./components/Source/Skills";
 import { employeeType, jobsType, skillsType } from "./components/Types/Types";
 import "./app.scss";
-const employesSelectedById: employeeType[] = [];
-type appType = {
+import NotFound from "./components/NotFoundPAge/NotFound";
+// Type definition for our state
+export type appType = {
   jobs: jobsType[];
   employees: employeeType[];
   selectedEmploy: employeeType[];
+  employeesWithMissingSkills: employeeType[];
   project: string;
   skills: skillsType[];
   employeeDetails: employeeType;
   jobDetails: jobsType;
   filterText: string;
+  searchText: string;
   filteredJobsArray: jobsType[];
   filteredEmployeeArray: employeeType[];
+  filteredJobsBySkillsArray: jobsType[];
   isEditOn: boolean;
   editID: string;
+  filteredJobsIds: string;
+  employeesWeUse: employeeType[];
+  filteredEmployeeId: string;
+
   skillsRequiredForTheSelectedJOb: skillsType[];
 };
 export const AppState: appType = {
   jobs: JobSource,
   employees: EmployeeSource,
-  selectedEmploy: employesSelectedById,
+  selectedEmploy: [],
+  employeesWithMissingSkills: [],
   project: "something",
   skills: SkillsSource,
+  filteredJobsBySkillsArray: JobSource,
+
   employeeDetails: {
     name: "",
     isAssignedJob: false,
@@ -55,11 +66,15 @@ export const AppState: appType = {
     description: "",
   },
   filterText: "",
+  searchText: "",
   filteredEmployeeArray: [],
   filteredJobsArray: [],
   isEditOn: false,
   editID: "",
   skillsRequiredForTheSelectedJOb: [],
+  filteredJobsIds: "",
+  filteredEmployeeId: "",
+  employeesWeUse: EmployeeSource,
 };
 function App() {
   const [state, dispatch] = useReducer(Reducer, AppState);
@@ -133,6 +148,10 @@ function App() {
     dispatch({ type: "DELETE_JOB", payload: id });
     navigate("/jobs");
   };
+  const onFilterTextChange = (data: string, field: string) => {
+    dispatch({ type: "CHANGE_FILTERTEXT", payload: data, field });
+    dispatch({ type: "FILTER_ITEMS", payload: data, field });
+  };
   return (
     <>
       <NavBar />
@@ -150,14 +169,21 @@ function App() {
           />
           <Route
             path="/jobs"
-            element={<Jobs getJob={goToJobDetails} alljobs={state.jobs} />}
+            element={
+              <Jobs
+                getJob={goToJobDetails}
+                onFilterTextChange={onFilterTextChange}
+                state={state}
+              />
+            }
           />
           <Route
             path="/employees"
             element={
               <Employees
+                onFilterTextChange={onFilterTextChange}
                 gotoEmployeePage={gotoEmployeePage}
-                allemployees={state.employees}
+                state={state}
               />
             }
           />
@@ -187,12 +213,22 @@ function App() {
           <Route
             path="/employee/:id"
             element={
-              <EmployeeDetails deleteEmployee={deleteEmployee} state={state} />
+              <EmployeeDetails
+                goToJobDetails={goToJobDetails}
+                deleteEmployee={deleteEmployee}
+                state={state}
+              />
             }
           />
           <Route
             path="/job/:id"
-            element={<JobDetails deleteJob={deleteJob} state={state} />}
+            element={
+              <JobDetails
+                deleteJob={deleteJob}
+                gotoEmployeePage={gotoEmployeePage}
+                state={state}
+              />
+            }
           />
           <Route
             path="/addjob"
@@ -243,6 +279,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </>

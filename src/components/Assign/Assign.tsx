@@ -1,19 +1,21 @@
-import React, { ChangeEventHandler, FormEvent } from "react";
-import { AppState } from "../../App";
+import React from "react";
+import { appType } from "../../App";
 import "./assign.scss";
 type propsTypes = {
-  state: typeof AppState;
+  state: appType;
   getSkilledEmployees: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   assign: (id: string) => void;
   gotoEmployeePage: (id: string) => void;
 };
 const Assign = (props: propsTypes) => {
+  // getting unassigned jobs
   const unAssignedJobs = props.state.jobs.filter(
     (job) => job.isAssigned === false
   );
 
   return (
     <div className="assign-container">
+      {/* adding conditions so that we can display only unassigned jobs in our select tag */}
       {unAssignedJobs.length > 0 ? (
         <>
           <p>Select a job to Assign:</p>
@@ -76,6 +78,33 @@ const Assign = (props: propsTypes) => {
                       Assign
                     </button>
                   )}
+                </div>
+              );
+            })}
+          </div>
+          <p>
+            {props.state.employeesWithMissingSkills.length > 0
+              ? "employees  with Missing job requirements"
+              : undefined}
+          </p>
+          <div className="employees-with-skills-container">
+            {props.state.employeesWithMissingSkills.map((employ) => {
+              return (
+                <div className="employee" key={employ.id}>
+                  <div onClick={() => props.gotoEmployeePage(employ.id)}>
+                    <p className="employee-name">{employ.name}</p>
+                    <div>
+                      <p>employ skills:</p>
+                      {employ.skills.map((item) => {
+                        return (
+                          <>
+                            <p key={item.id}>{item.name}</p>{" "}
+                          </>
+                        );
+                      })}
+                    </div>
+                    <p>Expierence: {employ.experience} Year</p>
+                  </div>
                 </div>
               );
             })}
