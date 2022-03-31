@@ -11,9 +11,7 @@ const JobDetails = (props: propsType) => {
   const { id } = useParams();
   // making sure that we recieve an id from url parameters
   if (id) {
-    const jobFromId = props.state.filteredJobsBySkillsArray.filter(
-      (job) => job.id === id
-    );
+    const jobFromId = props.state.jobs.filter((job) => job.id === id);
     // making sure that a job exist for the id we recieved from the url paramenters
     if (jobFromId.length > 0) {
       const getEmployee = () => {

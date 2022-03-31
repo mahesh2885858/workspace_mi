@@ -27,7 +27,8 @@ export type appType = {
   skills: skillsType[];
   employeeDetails: employeeType;
   jobDetails: jobsType;
-  filterText: string;
+  filterTextForEmployees: string;
+  filterTextForJobs: string;
   searchText: string;
   filteredJobsArray: jobsType[];
   filteredEmployeeArray: employeeType[];
@@ -35,8 +36,9 @@ export type appType = {
   isEditOn: boolean;
   editID: string;
   filteredJobsIds: string;
-  employeesWeUse: employeeType[];
+  employeesFilteredBySkills: employeeType[];
   filteredEmployeeId: string;
+  isFilterBySkillsON: boolean;
 
   skillsRequiredForTheSelectedJOb: skillsType[];
 };
@@ -47,7 +49,8 @@ export const AppState: appType = {
   employeesWithMissingSkills: [],
   project: "something",
   skills: SkillsSource,
-  filteredJobsBySkillsArray: JobSource,
+  filteredJobsBySkillsArray: [],
+  isFilterBySkillsON: false,
 
   employeeDetails: {
     name: "",
@@ -65,7 +68,8 @@ export const AppState: appType = {
     skillsRequired: [],
     description: "",
   },
-  filterText: "",
+  filterTextForEmployees: "",
+  filterTextForJobs: "",
   searchText: "",
   filteredEmployeeArray: [],
   filteredJobsArray: [],
@@ -74,7 +78,7 @@ export const AppState: appType = {
   skillsRequiredForTheSelectedJOb: [],
   filteredJobsIds: "",
   filteredEmployeeId: "",
-  employeesWeUse: EmployeeSource,
+  employeesFilteredBySkills: [],
 };
 function App() {
   const [state, dispatch] = useReducer(Reducer, AppState);
@@ -148,9 +152,16 @@ function App() {
     dispatch({ type: "DELETE_JOB", payload: id });
     navigate("/jobs");
   };
-  const onFilterTextChange = (data: string, field: string) => {
-    dispatch({ type: "CHANGE_FILTERTEXT", payload: data, field });
-    dispatch({ type: "FILTER_ITEMS", payload: data, field });
+  const clearFilters = () => {
+    dispatch({ type: "CLEAR_FILTERES", payload: "" });
+  };
+  const onFilterTextChangeForJobs = (data: string, field: string) => {
+    dispatch({ type: "CHANGE_FILTERTEXT_JOBS", payload: data, field });
+    dispatch({ type: "FILTER_ITEMS_JOBS", payload: data, field });
+  };
+  const onFilterTextChangeForEmployees = (data: string, field: string) => {
+    dispatch({ type: "CHANGE_FILTERTEXT_EMPLOYEES", payload: data, field });
+    dispatch({ type: "FILTER_ITEMS_EMPLOYEES", payload: data, field });
   };
   return (
     <>
@@ -171,8 +182,9 @@ function App() {
             path="/jobs"
             element={
               <Jobs
+                clearFilters={clearFilters}
                 getJob={goToJobDetails}
-                onFilterTextChange={onFilterTextChange}
+                onFilterTextChange={onFilterTextChangeForJobs}
                 state={state}
               />
             }
@@ -181,7 +193,8 @@ function App() {
             path="/employees"
             element={
               <Employees
-                onFilterTextChange={onFilterTextChange}
+                clearFilters={clearFilters}
+                onFilterTextChange={onFilterTextChangeForEmployees}
                 gotoEmployeePage={gotoEmployeePage}
                 state={state}
               />

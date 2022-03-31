@@ -1,21 +1,30 @@
 import { Link } from "react-router-dom";
 import "./jobs.scss";
 import { appType } from "../../App";
+import { useEffect } from "react";
 type propsType = {
   state: appType;
   getJob: (id: string) => void;
   onFilterTextChange: (data: string, field: string) => void;
+  clearFilters: () => void;
 };
 //  To show all the jobs and their status
 const Jobs = (props: propsType) => {
+  //  this will be used when we want to  use filter through jobs
+  const jobsToDisplay = props.state.isFilterBySkillsON
+    ? props.state.filteredJobsBySkillsArray
+    : props.state.jobs;
+  useEffect(() => {
+    props.clearFilters();
+  }, []);
   return (
     <div className="jobs-container">
       <div>
         <select
           onChange={(e) => props.onFilterTextChange(e.target.value, "jobs")}
-          value={props.state.filterText}
+          value={props.state.filterTextForJobs}
         >
-          <option value="">select</option>
+          <option value="">filter by skills</option>
           {props.state.skills.map((skill) => {
             return (
               <option value={skill.id} key={skill.id}>
@@ -28,7 +37,7 @@ const Jobs = (props: propsType) => {
       </div>
 
       <div className="jobs-details">
-        {props.state.filteredJobsBySkillsArray.map((job) => {
+        {jobsToDisplay.map((job) => {
           return (
             <div
               className="each-job"

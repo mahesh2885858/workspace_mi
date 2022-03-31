@@ -4,31 +4,33 @@ const getFilteredItems = (state: appType) => {
   // creting temporary object array to make working easy
   if (state.filteredEmployeeId) {
     const tempObjArr: { name: string; id: string; idm: string }[] = [];
-    const modififedObj = state.employeesWeUse.map((item) => {
+    const modififedObj = state.employees.map((item) => {
       for (let i = 0; i < item.skills.length; i++) {
         const obj = item.skills[i];
         const newobj = { ...obj, idm: item.id };
         tempObjArr.push(newobj);
       }
-      return;
+      return false;
     });
     const filteredIds = tempObjArr.filter((item) => {
       if (item.id === state.filteredEmployeeId) {
         return item.idm;
+      } else {
+        return false;
       }
     });
+    console.log(filteredIds);
 
-    const newEmployee = state.employeesWeUse.filter((employee) => {
+    const newEmployee = state.employees.filter((employee) => {
       for (let i = 0; i < filteredIds.length; i++) {
         if (employee.id === filteredIds[i].idm) {
           return employee;
         }
       }
     });
-
     return newEmployee;
   } else {
-    return state.employeesWeUse;
+    return state.employees;
   }
 };
 

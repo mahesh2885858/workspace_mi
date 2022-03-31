@@ -40,7 +40,7 @@ const Reducer = (state: appType, action: actionType): appType => {
       return {
         ...state,
         jobs: changedState.newJobs,
-        employeesWeUse: changedState.newEmployees,
+        employees: changedState.newEmployees,
         selectedEmploy: assignedEmployee,
       };
 
@@ -109,7 +109,7 @@ const Reducer = (state: appType, action: actionType): appType => {
           const newEmployee = { ...state.employeeDetails, id: uuid() };
           return {
             ...state,
-            employeesWeUse: [...state.employeesWeUse, newEmployee],
+            employees: [...state.employees, newEmployee],
             employeeDetails: {
               ...state.employeeDetails,
               name: "",
@@ -122,7 +122,7 @@ const Reducer = (state: appType, action: actionType): appType => {
           return state;
         }
       } else {
-        const employeesAfterEdit = state.employeesWeUse.map((employee) => {
+        const employeesAfterEdit = state.employees.map((employee) => {
           if (employee.id === state.editID) {
             return {
               ...employee,
@@ -142,7 +142,7 @@ const Reducer = (state: appType, action: actionType): appType => {
         return {
           ...state,
           editID: "",
-          employeesWeUse: employeesAfterEdit,
+          employees: employeesAfterEdit,
           isEditOn: false,
         };
       }
@@ -209,10 +209,7 @@ const Reducer = (state: appType, action: actionType): appType => {
           const newJob = { ...state.jobDetails, id: uuid() };
           return {
             ...state,
-            filteredJobsBySkillsArray: [
-              ...state.filteredJobsBySkillsArray,
-              newJob,
-            ],
+            jobs: [...state.jobs, newJob],
             jobDetails: {
               ...state.jobDetails,
               nameOfTheJob: "",
@@ -225,7 +222,7 @@ const Reducer = (state: appType, action: actionType): appType => {
           return state;
         }
       } else {
-        const jobsAfterEditing = state.filteredJobsBySkillsArray.map((job) => {
+        const jobsAfterEditing = state.jobs.map((job) => {
           if (job.id === state.editID) {
             return { ...job, ...state.jobDetails };
           } else {
@@ -234,7 +231,7 @@ const Reducer = (state: appType, action: actionType): appType => {
         });
         return {
           ...state,
-          filteredJobsBySkillsArray: jobsAfterEditing,
+          jobs: jobsAfterEditing,
           jobDetails: {
             ...state.jobDetails,
             description: "",
@@ -247,7 +244,7 @@ const Reducer = (state: appType, action: actionType): appType => {
         };
       }
     case "SEARCH_INPUT":
-      const filteredEmployees = state.employeesWeUse.filter((employee) => {
+      const filteredEmployees = state.employees.filter((employee) => {
         if (
           state.searchText &&
           employee.name.toLowerCase().includes(state.searchText)
@@ -276,7 +273,7 @@ const Reducer = (state: appType, action: actionType): appType => {
     case "CHANGE_SEARCH_INPUT":
       return { ...state, searchText: action.payload };
     case "SET_EMPLOYEE_INPUTS":
-      const Semployee = state.employeesWeUse.filter((employee) => {
+      const Semployee = state.employees.filter((employee) => {
         if (employee.id === action.payload) {
           return employee;
         } else {
@@ -300,14 +297,14 @@ const Reducer = (state: appType, action: actionType): appType => {
         return state;
       }
     case "DELETE_EMPLOYEE":
-      const employeesAfterDeleting = state.employeesWeUse.filter(
+      const employeesAfterDeleting = state.employees.filter(
         (employee) => employee.id !== action.payload
       );
       const deassignnedJOb = state.jobs.filter(
         (job) => job.assignedEmployeId === action.payload
       );
       if (!(deassignnedJOb.length > 0)) {
-        return { ...state, employeesWeUse: employeesAfterDeleting };
+        return { ...state, employees: employeesAfterDeleting };
       } else {
         const removingjobStatus = state.jobs.map((job) => {
           if (job.assignedEmployeId === action.payload) {
@@ -337,7 +334,7 @@ const Reducer = (state: appType, action: actionType): appType => {
         return state;
       }
     case "DELETE_JOB":
-      const employeedoingtheJob = state.employeesWeUse.filter(
+      const employeedoingtheJob = state.employees.filter(
         (employee) => employee.assignedJobId === action.payload
       );
       const jobsAfterDeleting = state.jobs.filter(
@@ -346,30 +343,59 @@ const Reducer = (state: appType, action: actionType): appType => {
       if (!(employeedoingtheJob.length > 0)) {
         return { ...state, jobs: jobsAfterDeleting };
       } else {
-        const removeJob = state.employeesWeUse.map((employee) => {
+        const removeJob = state.employees.map((employee) => {
           if (employee.assignedJobId === action.payload) {
             return { ...employee, assignedJobId: null, isAssignedJob: false };
           } else {
             return employee;
           }
         });
-        return { ...state, jobs: jobsAfterDeleting, employeesWeUse: removeJob };
+        return { ...state, jobs: jobsAfterDeleting, employees: removeJob };
       }
-    case "CHANGE_FILTERTEXT":
+    case "CHANGE_FILTERTEXT_JOBS":
+      if (action.payload === "") {
+        return {
+          ...state,
+          filterTextForJobs: action.payload,
+          isFilterBySkillsON: false,
+        };
+      } else
+        return {
+          ...state,
+          filterTextForJobs: action.payload,
+          filteredEmployeeId: action.payload,
+          isFilterBySkillsON: true,
+        };
+
+    case "FILTER_ITEMS_JOBS":
+      const filteredJobResult = getFilteredJobs(state);
+      return { ...state, filteredJobsBySkillsArray: filteredJobResult };
+    case "CHANGE_FILTERTEXT_EMPLOYEES":
+      if (action.payload === "") {
+        return {
+          ...state,
+          filterTextForEmployees: action.payload,
+          isFilterBySkillsON: false,
+        };
+      } else
+        return {
+          ...state,
+          filterTextForEmployees: action.payload,
+          filteredEmployeeId: action.payload,
+          isFilterBySkillsON: true,
+        };
+
+    case "FILTER_ITEMS_EMPLOYEES":
+      const filteredEmployeesArray = getFilteredItems(state);
+      return { ...state, employeesFilteredBySkills: filteredEmployeesArray };
+
+    case "CLEAR_FILTERES":
       return {
         ...state,
-        filterText: action.payload,
-        filteredEmployeeId: action.payload,
+        filterTextForEmployees: "",
+        filterTextForJobs: "",
+        isFilterBySkillsON: false,
       };
-    case "FILTER_ITEMS":
-      const filteredResults = getFilteredItems(state);
-      const filteredJobResult = getFilteredJobs(state);
-      if (action.field === "employee") {
-        return { ...state, employeesWeUse: filteredResults };
-      } else {
-        return { ...state, filteredJobsBySkillsArray: filteredJobResult };
-      }
-
     default:
       return state;
   }

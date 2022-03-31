@@ -11,7 +11,7 @@ const EmployeeDetails = (props: propsType) => {
   const { id } = useParams();
 
   if (id) {
-    const employeefromId = props.state.employeesWeUse.filter(
+    const employeefromId = props.state.employees.filter(
       (employee) => employee.id === id
     );
     // checking whether the employee with the id we recieve from the url exist or not

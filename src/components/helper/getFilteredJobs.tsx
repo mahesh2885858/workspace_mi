@@ -25,7 +25,6 @@ const getFilteredJobs = (state: appType) => {
         }
       }
     });
-
     return newJob;
   } else {
     return state.jobs;

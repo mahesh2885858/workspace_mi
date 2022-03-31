@@ -1,19 +1,28 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { appType } from "../../App";
 import "./employees.scss";
 type employPropsType = {
   state: appType;
   gotoEmployeePage: (e: string) => void;
   onFilterTextChange: (e: string, field: string) => void;
+  clearFilters: () => void;
 };
 //To show every employee and their status
 const Employees = (props: employPropsType) => {
+  // to filter through the employees
+  const employeesToDisplay = props.state.isFilterBySkillsON
+    ? props.state.employeesFilteredBySkills
+    : props.state.employees;
+  useEffect(() => {
+    props.clearFilters();
+  }, []);
   return (
     <div className="employee-container">
       <div>
         <select
           onChange={(e) => props.onFilterTextChange(e.target.value, "employee")}
-          value={props.state.filterText}
+          value={props.state.filterTextForEmployees}
           name="filter"
           id="filter"
         >
@@ -29,7 +38,7 @@ const Employees = (props: employPropsType) => {
         <Link to={`/addemploy`}>Add an employe</Link>
       </div>
       <div className="employee-details">
-        {props.state.employeesWeUse.map((employee) => {
+        {employeesToDisplay.map((employee) => {
           return (
             <div
               className="each-employee"
