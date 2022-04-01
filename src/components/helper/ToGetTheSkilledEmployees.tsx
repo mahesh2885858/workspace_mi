@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 // after selecting a job to assign from assign page we want to show how many employees we have that mathces the required skills for selected job whose id we recieved from arguments.
 // and also getting the employees who are missing required skills for the selected job.
 const helpToGetTheSkilledEmployees = (data: string, state: appType) => {

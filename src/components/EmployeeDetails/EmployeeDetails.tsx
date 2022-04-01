@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import "./employeedetails.scss";
 type propsType = {
   state: appType;

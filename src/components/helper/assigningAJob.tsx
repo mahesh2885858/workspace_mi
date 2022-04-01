@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 //  to assign the job to an employee whose id we recieved as an argument
 const assingTheJob = (employeId: string, state: appType) => {
   // getting the new Employees after assigning the job

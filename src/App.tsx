@@ -14,34 +14,11 @@ import Search from "./components/Search/Search";
 import EmployeeSource from "./components/Source/Employees";
 import JobSource from "./components/Source/Jobs";
 import SkillsSource from "./components/Source/Skills";
-import { employeeType, jobsType, skillsType } from "./components/Types/Types";
 import "./app.scss";
 import NotFound from "./components/NotFoundPAge/NotFound";
+import { appType } from "./components/Types/Types";
 // Type definition for our state
-export type appType = {
-  jobs: jobsType[];
-  employees: employeeType[];
-  selectedEmploy: employeeType[];
-  employeesWithMissingSkills: employeeType[];
-  project: string;
-  skills: skillsType[];
-  employeeDetails: employeeType;
-  jobDetails: jobsType;
-  filterTextForEmployees: string;
-  filterTextForJobs: string;
-  searchText: string;
-  filteredJobsArray: jobsType[];
-  filteredEmployeeArray: employeeType[];
-  filteredJobsBySkillsArray: jobsType[];
-  isEditOn: boolean;
-  editID: string;
-  filteredJobsIds: string;
-  employeesFilteredBySkills: employeeType[];
-  filteredEmployeeId: string;
-  isFilterBySkillsON: boolean;
 
-  skillsRequiredForTheSelectedJOb: skillsType[];
-};
 export const AppState: appType = {
   jobs: JobSource,
   employees: EmployeeSource,
@@ -89,11 +66,11 @@ function App() {
     dispatch({ type: "GET_SKILLED_EMPLOYES", payload: e.target.value });
   };
   // functions related to adding an employee
-  const onSkillChange = (skillId: string) => {
-    dispatch({ type: "ADD_SKILL_TO_EMPLOYEE", payload: skillId });
-  };
   const onInput = (data: string, field: string) => {
     dispatch({ type: "EMPLOYEE_DETAILS_INPUT", payload: data, field: field });
+  };
+  const onSkillChange = (skillId: string) => {
+    dispatch({ type: "ADD_SKILL_TO_EMPLOYEE", payload: skillId });
   };
   const AddEmployeeToDb = (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,10 +132,12 @@ function App() {
   const clearFilters = () => {
     dispatch({ type: "CLEAR_FILTERES", payload: "" });
   };
+  // when we change the skill we want to filter through for jobs
   const onFilterTextChangeForJobs = (data: string, field: string) => {
     dispatch({ type: "CHANGE_FILTERTEXT_JOBS", payload: data, field });
     dispatch({ type: "FILTER_ITEMS_JOBS", payload: data, field });
   };
+  // when we change the skill we want to filter through for employees
   const onFilterTextChangeForEmployees = (data: string, field: string) => {
     dispatch({ type: "CHANGE_FILTERTEXT_EMPLOYEES", payload: data, field });
     dispatch({ type: "FILTER_ITEMS_EMPLOYEES", payload: data, field });

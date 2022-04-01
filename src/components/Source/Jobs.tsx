@@ -58,5 +58,35 @@ const JobSource: jobsType[] = [
     ],
     description: "Create a user interface for admin manage the workspace",
   },
+  {
+    nameOfTheJob: "Simple Calculator",
+    id: "calctr234",
+    isAssigned: false,
+    assignedEmployeId: null,
+    skillsRequired: [
+      { name: "React", id: "RE123" },
+      { name: "TypeScript", id: "TPSCPT1156123" },
+    ],
+    description: "Create a simple calculator with clean user interface",
+  },
+  {
+    nameOfTheJob: "Food Ordering App",
+    id: "fdord1256",
+    isAssigned: false,
+    assignedEmployeId: null,
+    skillsRequired: [
+      { name: "React", id: "RE123" },
+
+      {
+        name: "MongoDb",
+        id: "MNGD1345",
+      },
+      {
+        name: "NodeJs",
+        id: "NDJ89",
+      },
+    ],
+    description: "Create a simple calculator with clean user interface",
+  },
 ];
 export default JobSource;

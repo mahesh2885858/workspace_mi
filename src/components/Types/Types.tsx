@@ -20,3 +20,28 @@ export type employeeType = {
   assignedJobId: null | string;
   experience: number;
 };
+// type definition for our state
+export type appType = {
+  jobs: jobsType[];
+  employees: employeeType[];
+  selectedEmploy: employeeType[];
+  employeesWithMissingSkills: employeeType[];
+  project: string;
+  skills: skillsType[];
+  employeeDetails: employeeType;
+  jobDetails: jobsType;
+  filterTextForEmployees: string;
+  filterTextForJobs: string;
+  searchText: string;
+  filteredJobsArray: jobsType[];
+  filteredEmployeeArray: employeeType[];
+  filteredJobsBySkillsArray: jobsType[];
+  isEditOn: boolean;
+  editID: string;
+  filteredJobsIds: string;
+  employeesFilteredBySkills: employeeType[];
+  filteredEmployeeId: string;
+  isFilterBySkillsON: boolean;
+
+  skillsRequiredForTheSelectedJOb: skillsType[];
+};

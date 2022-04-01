@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import { TiDelete } from "react-icons/ti";
 import "./addemployee.scss";
 import React, { useEffect } from "react";

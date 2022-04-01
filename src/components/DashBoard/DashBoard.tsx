@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import "./dashboard.scss";
 type propsType = {
   state: appType;

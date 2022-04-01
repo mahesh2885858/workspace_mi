@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./jobs.scss";
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import { useEffect } from "react";
 type propsType = {
   state: appType;

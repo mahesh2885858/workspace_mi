@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 
 const getFilteredJobs = (state: appType) => {
   // creting temporary object array to make working easy

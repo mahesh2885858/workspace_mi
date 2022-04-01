@@ -1,5 +1,5 @@
 import React from "react";
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import "./assign.scss";
 type propsTypes = {
   state: appType;

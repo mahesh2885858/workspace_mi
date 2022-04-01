@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 
 const getFilteredItems = (state: appType) => {
   // creting temporary object array to make working easy
@@ -19,7 +19,6 @@ const getFilteredItems = (state: appType) => {
         return false;
       }
     });
-    console.log(filteredIds);
 
     const newEmployee = state.employees.filter((employee) => {
       for (let i = 0; i < filteredIds.length; i++) {

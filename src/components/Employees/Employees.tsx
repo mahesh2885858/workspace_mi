@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import "./employees.scss";
 type employPropsType = {
   state: appType;

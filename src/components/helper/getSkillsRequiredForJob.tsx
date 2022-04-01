@@ -1,4 +1,4 @@
-import { appType } from "../../App";
+import { appType } from "../Types/Types";
 import { skillsType } from "../Types/Types";
 
 // To get the skills required for job we selected while assigning a job
